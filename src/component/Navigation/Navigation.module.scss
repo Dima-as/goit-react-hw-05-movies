@@ -1,0 +1,25 @@
+.header {
+  background: #395870;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+.list {
+  display: flex;
+  justify-content: center;
+}
+.link {
+  text-transform: uppercase;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  background: linear-gradient(#49708f, #293f50);
+  color: #fff;
+  display: inline-block;
+  text-decoration: none;
+  padding: 12px;
+  font-weight: 500;
+  font-size: 18;
+}
+
+.active {
+  composes: link;
+  color: #2196f3;
+}
