@@ -39,7 +39,7 @@ export default function MoviesPage() {
     if (urlSearch) {
       setName(urlSearch);
     }
-  }, []);
+  }, [location.search]);
 
   useEffect(() => {
     if (!name) {

@@ -22,11 +22,16 @@ export default function MovieDetailsPage() {
   const urlImg = "https://image.tmdb.org/t/p/w500";
 
   const goBack = () => {
-    navigate(
-      location.state?.from?.pathname
-        ? `${location.state?.from?.pathname}${location.state?.from?.search}`
-        : "/"
-    );
+    if (
+      location.pathname === `/movies/${movieId}/cast` ||
+      location.pathname === `/movies/${movieId}/reviews`
+    ) {
+      return navigate(-2);
+    }
+    if (!location.state) {
+      return navigate("/");
+    }
+    return navigate(-1);
   };
 
   useEffect(() => {
