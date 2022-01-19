@@ -1,6 +1,6 @@
 import { fetchFilm } from "../../services";
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Searchbar from "../../component/Searchbar/Searchbar ";
 import { ToastContainer, toast } from "react-toastify";
 import Button from "../../component/Button/Button";
@@ -8,6 +8,7 @@ import s from "./MoviesPage.module.scss";
 import def from "../../images/def.jpg";
 export default function MoviesPage() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [search, setSearch] = useState([]);
   const [page, setPage] = useState(1);
@@ -18,10 +19,12 @@ export default function MoviesPage() {
     setSearch([]);
     setPage(1);
   };
+
   const onLoadMoreBtn = (e) => {
     setPage(page + 1, scrollPageToEnd());
     e.preventDefault();
   };
+
   const scrollPageToEnd = () => {
     setTimeout(() => {
       window.scrollBy({
@@ -32,10 +35,18 @@ export default function MoviesPage() {
   };
 
   useEffect(() => {
+    const urlSearch = new URLSearchParams(location.search).get("name");
+    if (urlSearch) {
+      setName(urlSearch);
+    }
+  }, []);
+
+  useEffect(() => {
     if (!name) {
       setSearch(search);
       return;
     }
+
     fetchFilm(name, page)
       .then(({ results }) => {
         if (results.length === 0) {
@@ -49,6 +60,7 @@ export default function MoviesPage() {
             progress: undefined,
           });
         }
+        navigate({ search: `name=${name}` });
         setSearch([...search, ...results]);
       })
       .catch((error) => alert(error.message));

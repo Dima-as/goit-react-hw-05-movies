@@ -17,7 +17,7 @@ export default function Searchbar({ onSubmit }) {
       return toast.error(`We did not find ${name}`);
     }
     onSubmit(name);
-    setName("");
+    setName(name);
   };
 
   return (
